@@ -1,5 +1,5 @@
 import pytest
-from arbitrage_tool.arbitrage.arbitrage import Arbitrage, ThreeWayArbitrage
+from arbitrage_tool.arbitrage.classes import Arbitrage, ThreeWayArbitrage
 
 def test_american_to_decimal():
     assert Arbitrage.american_to_decimal(150) == 2.5
