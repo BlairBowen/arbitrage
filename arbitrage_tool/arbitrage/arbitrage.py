@@ -180,7 +180,7 @@ class ThreeWayArbitrage(Arbitrage):
     """
 
     def __init__(self, odd_x, odd_y, odd_z, investment):
-        super().__init__(odd_x, odd_y, investment)  # Call base class constructor
+        super().__init__(odd_x, odd_y, investment) 
         self.odd_z = odd_z
 
     def is_arbitrage(self) -> bool:
