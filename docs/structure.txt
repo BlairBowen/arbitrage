@@ -1,0 +1,35 @@
+sports-betting-arbitrage/
+├── arbitrage_tool/
+│   ├── arbitrage/
+│   │   ├── __init__.py
+│   │   ├── classes.py
+│   │   ├── core.py
+│   ├── data_processing/
+│   │   ├── __init__.py
+│   │   ├── processor.py
+│   │   └── handlers.py
+│   └── odds_fetcher/
+│       ├── __init__.py
+│       ├── fetcher.py
+│       └── parsers.py
+├── tests/
+│   ├── arbitrage/
+│   │   ├── test_classes.py
+│   │   └── test_core.py
+│   ├── data_processing/
+│   │   ├── test_handlers.py
+│   │   └── test_processor.py
+│   └── odds_fetcher/
+│       ├── test_fetcher.py
+│       └── test_parsers.py
+├── docs/
+│   └── usage.md
+├── data/
+│   ├── raw/
+│   │   └── test_data.csv
+│   └── processed/
+│       └── test_data.json
+├── .gitignore
+├── requirements.txt
+├── setup.py
+└── README.md
