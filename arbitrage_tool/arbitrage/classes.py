@@ -2,6 +2,7 @@ import logging
 
 logging.basicConfig(level=logging.WARNING, format="%(levelname)s: %(message)s")
 
+
 class Arbitrage:
     """
     A base class for handling arbitrage calculations with two odd bets.
@@ -45,7 +46,7 @@ class Arbitrage:
         Returns:
         float: The implied probability.
         """
-        implied_odds = 1 / Arbitrage.american_to_decimal(american_odd)
+        implied_odds = round(1 / Arbitrage.american_to_decimal(american_odd), 3)
         return implied_odds
 
     def is_arbitrage(self) -> bool:
@@ -55,7 +56,9 @@ class Arbitrage:
         Returns:
         bool: True if there is an arbitrage opportunity, False otherwise.
         """
-        arbitrage_pct = self.american_to_implied(self.odd_x) + self.american_to_implied(self.odd_y)
+        arbitrage_pct = self.american_to_implied(self.odd_x) + self.american_to_implied(
+            self.odd_y
+        )
         return arbitrage_pct < 1
 
     def unbiased_arbitrage(self) -> tuple[float, float] | None:
@@ -70,9 +73,15 @@ class Arbitrage:
         None: If no arbitrage opportunity exists.
         """
         if self.is_arbitrage():
-            arbitrage_pct = self.american_to_implied(self.odd_x) + self.american_to_implied(self.odd_y)
-            wager_x = (self.investment * self.american_to_implied(self.odd_x)) / arbitrage_pct
-            wager_y = (self.investment * self.american_to_implied(self.odd_y)) / arbitrage_pct
+            arbitrage_pct = self.american_to_implied(
+                self.odd_x
+            ) + self.american_to_implied(self.odd_y)
+            wager_x = (
+                self.investment * self.american_to_implied(self.odd_x)
+            ) / arbitrage_pct
+            wager_y = (
+                self.investment * self.american_to_implied(self.odd_y)
+            ) / arbitrage_pct
             return round(wager_x, 2), round(wager_y, 2)
         else:
             logging.warning("Not a valid arbitrage")
@@ -89,20 +98,21 @@ class Arbitrage:
         tuple: The amounts to wager on preferred_odd and cover_odd respectively, rounded to 2 decimal places.
         None: If no arbitrage opportunity exists.
         """
-        cover_list = [
-            self.odd_x,
-            self.odd_y
-        ]
+        cover_list = [self.odd_x, self.odd_y]
 
         del cover_list[preferred_index]
+
+        cover_wagers = []
 
         if self.is_arbitrage():
             total_cover_wager = 0
             for odd in cover_list:
                 cover_wager = self.american_to_implied(odd) * self.investment
                 total_cover_wager += cover_wager
+                cover_wagers.append(cover_wager)
             preferred_wager = self.investment - total_cover_wager
-            return round(preferred_wager, 2), round(cover_wager, 2)
+            cover_wagers.insert(preferred_index, preferred_wager)
+            return round(cover_wagers[0], 2), round(cover_wagers[1], 2)
         else:
             logging.warning("Not a valid arbitrage")
             return None
@@ -156,17 +166,18 @@ class Arbitrage:
             biased_return_a = self.net_return(biased_stake_a, self.odd_x)
             biased_roi_a = self.return_on_investment(biased_return_a, self.investment)
 
-            biased_stake_b = self.biased_arbitrage(1)[0]
+            biased_stake_b = self.biased_arbitrage(1)[1]
             biased_return_b = self.net_return(biased_stake_b, self.odd_y)
             biased_roi_b = self.return_on_investment(biased_return_b, self.investment)
 
             biased_prob_a = unbiased_roi / biased_roi_a
             biased_prob_b = unbiased_roi / biased_roi_b
 
-            return biased_prob_a, biased_prob_b
+            return round(biased_prob_a, 2), round(biased_prob_b, 2)
         else:
             logging.warning("Not a valid arbitrage")
             return None
+
 
 class ThreeWayArbitrage(Arbitrage):
     """
@@ -180,7 +191,7 @@ class ThreeWayArbitrage(Arbitrage):
     """
 
     def __init__(self, odd_x, odd_y, odd_z, investment):
-        super().__init__(odd_x, odd_y, investment) 
+        super().__init__(odd_x, odd_y, investment)
         self.odd_z = odd_z
 
     def is_arbitrage(self) -> bool:
@@ -191,9 +202,9 @@ class ThreeWayArbitrage(Arbitrage):
         bool: True if there is an arbitrage opportunity, False otherwise.
         """
         implied_sum = (
-            self.american_to_implied(self.odd_x) +
-            self.american_to_implied(self.odd_y) +
-            self.american_to_implied(self.odd_z)
+            self.american_to_implied(self.odd_x)
+            + self.american_to_implied(self.odd_y)
+            + self.american_to_implied(self.odd_z)
         )
         return implied_sum < 1
 
@@ -235,11 +246,7 @@ class ThreeWayArbitrage(Arbitrage):
         tuple: The amounts to wager on preferred_odd and cover_odd respectively, rounded to 2 decimal places.
         None: If no arbitrage opportunity exists.
         """
-        cover_list = [
-            self.odd_x,
-            self.odd_y,
-            self.odd_z
-        ]
+        cover_list = [self.odd_x, self.odd_y, self.odd_z]
 
         cover_wagers = []
 
@@ -253,10 +260,15 @@ class ThreeWayArbitrage(Arbitrage):
                 cover_wagers.append(cover_wager)
             preferred_wager = self.investment - total_cover_wager
             cover_wagers.insert(preferred_index, preferred_wager)
-            return round(cover_wagers[0], 2), round(cover_wagers[1], 2), round(cover_wagers[2], 2)
+            return (
+                round(cover_wagers[0], 2),
+                round(cover_wagers[1], 2),
+                round(cover_wagers[2], 2),
+            )
         else:
             logging.warning("Not a valid arbitrage")
             return None
+
 
 if __name__ == "__main__":
     # Example usage for two-way arbitrage
