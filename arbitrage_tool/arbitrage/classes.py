@@ -3,6 +3,14 @@ import logging
 logging.basicConfig(level=logging.WARNING, format="%(levelname)s: %(message)s")
 
 
+class ArbitrageError(Exception):
+    """Exception raised for errors related to arbitrage calculations."""
+
+    def __init__(self, message="Not a valid arbitrage"):
+        self.message = message
+        super().__init__(self.message)
+
+
 class Arbitrage:
     """
     A base class for handling arbitrage calculations with two odd bets.
@@ -17,6 +25,8 @@ class Arbitrage:
         self.odd_x = odd_x
         self.odd_y = odd_y
         self.investment = investment
+        if not self.is_arbitrage(debug=True):
+            raise ArbitrageError
 
     @staticmethod
     def american_to_decimal(american_odd: int) -> float:
@@ -49,7 +59,7 @@ class Arbitrage:
         implied_odds = round(1 / Arbitrage.american_to_decimal(american_odd), 3)
         return implied_odds
 
-    def is_arbitrage(self) -> bool:
+    def is_arbitrage(self, debug=False) -> bool:
         """
         Check if the given odds represent an arbitrage opportunity.
 
@@ -59,6 +69,7 @@ class Arbitrage:
         arbitrage_pct = self.american_to_implied(self.odd_x) + self.american_to_implied(
             self.odd_y
         )
+        print(arbitrage_pct)
         return arbitrage_pct < 1
 
     def unbiased_arbitrage(self) -> tuple[float, float] | None:
@@ -72,20 +83,17 @@ class Arbitrage:
         tuple: The amounts to wager on odd_x and odd_y respectively, rounded to 2 decimal places.
         None: If no arbitrage opportunity exists.
         """
-        if self.is_arbitrage():
-            arbitrage_pct = self.american_to_implied(
-                self.odd_x
-            ) + self.american_to_implied(self.odd_y)
-            wager_x = (
-                self.investment * self.american_to_implied(self.odd_x)
-            ) / arbitrage_pct
-            wager_y = (
-                self.investment * self.american_to_implied(self.odd_y)
-            ) / arbitrage_pct
-            return round(wager_x, 2), round(wager_y, 2)
-        else:
-            logging.warning("Not a valid arbitrage")
-            return None
+
+        arbitrage_pct = self.american_to_implied(self.odd_x) + self.american_to_implied(
+            self.odd_y
+        )
+        wager_x = (
+            self.investment * self.american_to_implied(self.odd_x)
+        ) / arbitrage_pct
+        wager_y = (
+            self.investment * self.american_to_implied(self.odd_y)
+        ) / arbitrage_pct
+        return round(wager_x, 2), round(wager_y, 2)
 
     def biased_arbitrage(self, preferred_index=0) -> tuple[float, float] | None:
         """
@@ -104,18 +112,16 @@ class Arbitrage:
 
         cover_wagers = []
 
-        if self.is_arbitrage():
-            total_cover_wager = 0
-            for odd in cover_list:
-                cover_wager = self.american_to_implied(odd) * self.investment
-                total_cover_wager += cover_wager
-                cover_wagers.append(cover_wager)
-            preferred_wager = self.investment - total_cover_wager
-            cover_wagers.insert(preferred_index, preferred_wager)
-            return round(cover_wagers[0], 2), round(cover_wagers[1], 2)
-        else:
-            logging.warning("Not a valid arbitrage")
-            return None
+        total_cover_wager = 0
+        for odd in cover_list:
+            cover_wager = self.american_to_implied(odd) * self.investment
+            total_cover_wager += cover_wager
+            cover_wagers.append(cover_wager)
+
+        preferred_wager = self.investment - total_cover_wager
+        cover_wagers.insert(preferred_index, preferred_wager)
+
+        return round(cover_wagers[0], 2), round(cover_wagers[1], 2)
 
     @staticmethod
     def return_on_investment(net_return: float, investment: float) -> float:
@@ -145,6 +151,27 @@ class Arbitrage:
         """
         return stake * Arbitrage.american_to_decimal(odds)
 
+    def profit_calculation(self):
+        """
+        Calculate and print the profit for both unbiased and biased arbitrage strategies.
+
+        Prints:
+        - The profit from the unbiased arbitrage.
+        - The profit from the biased arbitrage for each set of odds.
+        """
+        unbiased_wagers = self.unbiased_arbitrage()
+        biased_wagers = [self.biased_arbitrage(i) for i in range(2)]
+
+        odds_list = [self.odd_x, self.odd_y]
+
+        print(
+            f"Unbiased: {round(2 * (self.net_return(unbiased_wagers[0], self.odd_x) - self.investment), 2)}"
+        )
+        for i in range(2):
+            print(
+                f"Biased {i}: {round((self.net_return(biased_wagers[i][i], odds_list[i]) - self.investment), 2)}"
+            )
+
     def biased_prob_threshold(self) -> tuple[float, float] | None:
         """
         Calculate the probability threshold of choosing biased over unbiased arbitrage strategy.
@@ -157,26 +184,22 @@ class Arbitrage:
                each set of odds (biased_prob_a, biased_prob_b).
         None: If no arbitrage opportunity exists.
         """
-        if self.is_arbitrage():
-            unbiased_stake = self.unbiased_arbitrage()[0]
-            unbiased_return = self.net_return(unbiased_stake, self.odd_x)
-            unbiased_roi = self.return_on_investment(unbiased_return, self.investment)
+        unbiased_stake = self.unbiased_arbitrage()[0]
+        unbiased_return = self.net_return(unbiased_stake, self.odd_x)
+        unbiased_roi = self.return_on_investment(unbiased_return, self.investment)
 
-            biased_stake_a = self.biased_arbitrage(0)[0]
-            biased_return_a = self.net_return(biased_stake_a, self.odd_x)
-            biased_roi_a = self.return_on_investment(biased_return_a, self.investment)
+        biased_stake_a = self.biased_arbitrage(0)[0]
+        biased_return_a = self.net_return(biased_stake_a, self.odd_x)
+        biased_roi_a = self.return_on_investment(biased_return_a, self.investment)
 
-            biased_stake_b = self.biased_arbitrage(1)[1]
-            biased_return_b = self.net_return(biased_stake_b, self.odd_y)
-            biased_roi_b = self.return_on_investment(biased_return_b, self.investment)
+        biased_stake_b = self.biased_arbitrage(1)[1]
+        biased_return_b = self.net_return(biased_stake_b, self.odd_y)
+        biased_roi_b = self.return_on_investment(biased_return_b, self.investment)
 
-            biased_prob_a = unbiased_roi / biased_roi_a
-            biased_prob_b = unbiased_roi / biased_roi_b
+        biased_prob_a = unbiased_roi / biased_roi_a
+        biased_prob_b = unbiased_roi / biased_roi_b
 
-            return round(biased_prob_a, 2), round(biased_prob_b, 2)
-        else:
-            logging.warning("Not a valid arbitrage")
-            return None
+        return round(biased_prob_a, 2), round(biased_prob_b, 2)
 
 
 class ThreeWayArbitrage(Arbitrage):
@@ -191,8 +214,8 @@ class ThreeWayArbitrage(Arbitrage):
     """
 
     def __init__(self, odd_x, odd_y, odd_z, investment):
-        super().__init__(odd_x, odd_y, investment)
         self.odd_z = odd_z
+        super().__init__(odd_x, odd_y, investment)
 
     def is_arbitrage(self) -> bool:
         """
@@ -219,21 +242,17 @@ class ThreeWayArbitrage(Arbitrage):
         tuple: The amounts to wager on odd_x, odd_y, and odd_z respectively, rounded to 2 decimal places.
         None: If no arbitrage opportunity exists.
         """
-        if self.is_arbitrage():
-            implied_x = self.american_to_implied(self.odd_x)
-            implied_y = self.american_to_implied(self.odd_y)
-            implied_z = self.american_to_implied(self.odd_z)
+        implied_x = self.american_to_implied(self.odd_x)
+        implied_y = self.american_to_implied(self.odd_y)
+        implied_z = self.american_to_implied(self.odd_z)
 
-            total_implied = implied_x + implied_y + implied_z
+        total_implied = implied_x + implied_y + implied_z
 
-            wager_x = (self.investment * implied_x) / total_implied
-            wager_y = (self.investment * implied_y) / total_implied
-            wager_z = (self.investment * implied_z) / total_implied
+        wager_x = (self.investment * implied_x) / total_implied
+        wager_y = (self.investment * implied_y) / total_implied
+        wager_z = (self.investment * implied_z) / total_implied
 
-            return round(wager_x, 2), round(wager_y, 2), round(wager_z, 2)
-        else:
-            logging.warning("Not a valid arbitrage")
-            return None
+        return round(wager_x, 2), round(wager_y, 2), round(wager_z, 2)
 
     def biased_arbitrage(self, preferred_index=0) -> tuple[float, float, float] | None:
         """
@@ -252,22 +271,39 @@ class ThreeWayArbitrage(Arbitrage):
 
         _ = cover_list.pop(preferred_index)
 
-        if self.is_arbitrage():
-            total_cover_wager = 0
-            for odd in cover_list:
-                cover_wager = self.american_to_implied(odd) * self.investment
-                total_cover_wager += cover_wager
-                cover_wagers.append(cover_wager)
-            preferred_wager = self.investment - total_cover_wager
-            cover_wagers.insert(preferred_index, preferred_wager)
-            return (
-                round(cover_wagers[0], 2),
-                round(cover_wagers[1], 2),
-                round(cover_wagers[2], 2),
+        total_cover_wager = 0
+        for odd in cover_list:
+            cover_wager = self.american_to_implied(odd) * self.investment
+            total_cover_wager += cover_wager
+            cover_wagers.append(cover_wager)
+        preferred_wager = self.investment - total_cover_wager
+        cover_wagers.insert(preferred_index, preferred_wager)
+        return (
+            round(cover_wagers[0], 2),
+            round(cover_wagers[1], 2),
+            round(cover_wagers[2], 2),
+        )
+
+    def profit_calculation(self):
+        """
+        Calculate and print the profit for both unbiased and biased arbitrage strategies with three bets.
+
+        Prints:
+        - The profit from the unbiased arbitrage.
+        - The profit from the biased arbitrage for each set of odds.
+        """
+        unbiased_wagers = self.unbiased_arbitrage()
+        biased_wagers = [self.biased_arbitrage(i) for i in range(3)]
+
+        odds_list = [self.odd_x, self.odd_y, self.odd_z]
+
+        print(
+            f"Unbiased: {round(3 * (self.net_return(unbiased_wagers[0], self.odd_x) - self.investment), 2)}"
+        )
+        for i in range(3):
+            print(
+                f"Biased {i}: {round((self.net_return(biased_wagers[i][i], odds_list[i]) - self.investment), 2)}"
             )
-        else:
-            logging.warning("Not a valid arbitrage")
-            return None
 
 
 if __name__ == "__main__":

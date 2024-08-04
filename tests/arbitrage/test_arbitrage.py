@@ -48,7 +48,7 @@ def test_biased_prob_threshold():
     assert arb.biased_prob_threshold() == (0.97, 0.82)
     
     arb = Arbitrage(100, 100, 1000)
-    assert arb.biased_prob_threshold() is None
+    assert arb.biased_prob_threshold() is None 
 
 def test_three_way_arbitrage_unbiased():
     three_way = ThreeWayArbitrage(250, 300, 200, 500)
