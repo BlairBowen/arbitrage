@@ -1,5 +1,10 @@
 # least predictible sports
-- MMA
-- Boxing
 - Baseball
+- UFC
+- Soccer
 - Aussie Football
+- Football
+
+
+
+need to grab user-agents list!!!

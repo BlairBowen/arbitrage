@@ -1,0 +1,24 @@
+sportsbooks:
+  draft-kings:
+    selector: "tbody.sportsbook-table__body"
+    baseball-mlb:
+      url: "https://sportsbook.draftkings.com/leagues/baseball/mlb"
+  espn-bet:
+    selector: "div.flex.flex-col.gap-3.rounded.p-4.bg-card-primary-temp"
+    baseball-mlb:
+      url: "https://espnbet.com/sport/baseball/organization/united-states/competition/mlb"
+  fanduel:
+    baseball-mlb:
+      url: "https://sportsbook.fanduel.com/navigation/mlb"
+  bet365:
+    baseball-mlb:
+      url: "https://www.oh.bet365.com/?_h=ACa0MP75kFJPW-3O_Dyj_A%3D%3D&btsffd=1#/AC/B16/C20525425/D48/E1096/F10/"
+  points-bet:
+    baseball-mlb:
+      url: "https://on.pointsbet.ca/sports/baseball"
+  caesars:
+    baseball-mlb:
+      url: "https://sportsbook.caesars.com/us/oh/bet/baseball/events/all?id=04f90892-3afa-4e84-acce-5b89f151063d"
+  bet-mgm:
+    baseball-mlb:
+      url: "https://sports.oh.betmgm.com/en/sports/baseball-23/betting/usa-9/mlb-75"
