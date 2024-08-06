@@ -1,0 +1,29 @@
+moneyA,moneyB,moneyC,over,sideA,sideB,spread,spreadA,spreadB,total,under
+-105,-115,,-130,ARI Diamondbacks,CLE Guardians,-1.5,+165,-200,O 7.5,+110
+-180,+150,,+105,SD Padres,PIT Pirates,-1.5,-105,-115,O 8.5,-125
+-135,+115,,-120,CIN Reds,MIA Marlins,-1.5,+125,-150,O 7.5,Even
+-120,Even,,+115,SF Giants,WSH Nationals,-1.5,+135,-160,O 9.5,-135
+-150,+125,,-120,BAL Orioles,TOR Blue Jays,-1.5,+110,-130,O 8.5,Even
++110,-130,,-130,MIL Brewers,ATL Braves,+1.5,-180,+150,O 8.5,+110
++130,-155,,-110,TB Rays,STL Cardinals,+1.5,-165,+140,O 7.5,-110
+-110,-110,,+105,MIN Twins,CHI Cubs,-1.5,+170,-215,O 6.5,-125
+-120,Even,,-105,HOU Astros,TEX Rangers,-1.5,+140,-165,O 8.5,-115
++110,-130,,-105,BOS Red Sox,KC Royals,+1.5,-190,+160,O 8.5,-115
+-155,+130,,-110,NY Mets,COL Rockies,-1.5,Even,-120,O 11.5,-110
++165,-200,,Even,DET Tigers,SEA Mariners,+1.5,-125,+105,O 7.5,-120
++190,-225,,-105,CHI White Sox,OAK Athletics,+1.5,-115,-105,O 8.5,-115
+-110,-110,,-105,PHI Phillies,LA Dodgers,-1.5,+160,-190,O 8.5,-115
+-145,+120,,-130,ARI Diamondbacks,CLE Guardians,-1.5,+120,-140,O 7.5,+110
+-150,+125,,-135,MIN Twins,CHI Cubs,-1.5,+130,-150,O 6.5,+115
++195,-235,,-110,CHI White Sox,OAK Athletics,+1.5,-105,-115,O 8.5,-110
+-160,+135,,Even,CIN Reds,MIA Marlins,-1.5,+110,-130,O 8.5,-120
+-150,+125,,-125,SD Padres,PIT Pirates,-1.5,+120,-140,O 7.5,+105
+-165,+140,,-125,SF Giants,WSH Nationals,-1.5,+105,-125,O 7.5,+105
++215,-265,,+115,LA Angels,NY Yankees,+1.5,+115,-135,O 9.5,-135
+-160,+135,,+105,BAL Orioles,TOR Blue Jays,-1.5,+105,-125,O 9.5,-125
++140,-165,,-110,MIL Brewers,ATL Braves,+1.5,-150,+130,O 7.5,-110
+Even,-120,,-110,TB Rays,STL Cardinals,-1.5,+170,-215,O 7.5,-110
++130,-155,,-105,BOS Red Sox,KC Royals,+1.5,-160,+135,O 8.5,-115
+-165,+140,,+105,NY Mets,COL Rockies,-1.5,-110,-110,O 11.5,-125
++120,-145,,-110,DET Tigers,SEA Mariners,+1.5,-190,+160,O 6.5,-110
++125,-150,,-130,PHI Phillies,LA Dodgers,+1.5,-160,+135,O 8.5,+110

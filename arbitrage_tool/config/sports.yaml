@@ -1,0 +1,11 @@
+sports:
+  two:
+    - 'mma-ufc'
+    - 'boxing'
+    - 'tennis'
+  two+:
+    - 'baseball-mlb'
+    - 'football-nfl'
+  three:
+    - 'soccer-epl'
+    - 'soccer-ucl'

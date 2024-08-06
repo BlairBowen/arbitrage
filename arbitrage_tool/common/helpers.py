@@ -6,4 +6,4 @@ def read_yaml(yaml_name):
     with open(path, 'r') as file:
         config = yaml.safe_load(file)
     
-    return config
+    return config[yaml_name]
