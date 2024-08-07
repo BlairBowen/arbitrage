@@ -6,9 +6,10 @@ from scrapy.loader import ItemLoader
 from common.helpers import read_yaml
 from datetime import datetime
 import hashlib
+from sportsbook_scraper.spiders.sportsbookspider import SportsbookSpider
 
-class SportsbookSpider(scrapy.Spider):
-    name = "sportsbookspider"
+class ESPNSpider(SportsbookSpider):
+    name = "espnspider"
 
     def __init__(self, name: str | None = None, sport=None, **kwargs: Any):
         super().__init__(name, **kwargs)

@@ -1,29 +1,15 @@
-moneyA,moneyB,moneyC,over,sideA,sideB,spread,spreadA,spreadB,total,under
--105,-115,,-130,ARI Diamondbacks,CLE Guardians,-1.5,+165,-200,O 7.5,+110
--180,+150,,+105,SD Padres,PIT Pirates,-1.5,-105,-115,O 8.5,-125
--135,+115,,-120,CIN Reds,MIA Marlins,-1.5,+125,-150,O 7.5,Even
--120,Even,,+115,SF Giants,WSH Nationals,-1.5,+135,-160,O 9.5,-135
--150,+125,,-120,BAL Orioles,TOR Blue Jays,-1.5,+110,-130,O 8.5,Even
-+110,-130,,-130,MIL Brewers,ATL Braves,+1.5,-180,+150,O 8.5,+110
-+130,-155,,-110,TB Rays,STL Cardinals,+1.5,-165,+140,O 7.5,-110
--110,-110,,+105,MIN Twins,CHI Cubs,-1.5,+170,-215,O 6.5,-125
--120,Even,,-105,HOU Astros,TEX Rangers,-1.5,+140,-165,O 8.5,-115
-+110,-130,,-105,BOS Red Sox,KC Royals,+1.5,-190,+160,O 8.5,-115
--155,+130,,-110,NY Mets,COL Rockies,-1.5,Even,-120,O 11.5,-110
-+165,-200,,Even,DET Tigers,SEA Mariners,+1.5,-125,+105,O 7.5,-120
-+190,-225,,-105,CHI White Sox,OAK Athletics,+1.5,-115,-105,O 8.5,-115
--110,-110,,-105,PHI Phillies,LA Dodgers,-1.5,+160,-190,O 8.5,-115
--145,+120,,-130,ARI Diamondbacks,CLE Guardians,-1.5,+120,-140,O 7.5,+110
--150,+125,,-135,MIN Twins,CHI Cubs,-1.5,+130,-150,O 6.5,+115
-+195,-235,,-110,CHI White Sox,OAK Athletics,+1.5,-105,-115,O 8.5,-110
--160,+135,,Even,CIN Reds,MIA Marlins,-1.5,+110,-130,O 8.5,-120
--150,+125,,-125,SD Padres,PIT Pirates,-1.5,+120,-140,O 7.5,+105
--165,+140,,-125,SF Giants,WSH Nationals,-1.5,+105,-125,O 7.5,+105
-+215,-265,,+115,LA Angels,NY Yankees,+1.5,+115,-135,O 9.5,-135
--160,+135,,+105,BAL Orioles,TOR Blue Jays,-1.5,+105,-125,O 9.5,-125
-+140,-165,,-110,MIL Brewers,ATL Braves,+1.5,-150,+130,O 7.5,-110
-Even,-120,,-110,TB Rays,STL Cardinals,-1.5,+170,-215,O 7.5,-110
-+130,-155,,-105,BOS Red Sox,KC Royals,+1.5,-160,+135,O 8.5,-115
--165,+140,,+105,NY Mets,COL Rockies,-1.5,-110,-110,O 11.5,-125
-+120,-145,,-110,DET Tigers,SEA Mariners,+1.5,-190,+160,O 6.5,-110
-+125,-150,,-130,PHI Phillies,LA Dodgers,+1.5,-160,+135,O 8.5,+110
+date,gameCode,moneyA,moneyB,moneyC,over,sideA,sideB,spread,spreadA,spreadB,total,under
+LIVE,6efd7a3641a5084552eb6863cc6d53db,-475,+320,,-120,philadelphia phillies,los angeles dodgers,-2.5,+105,-135,O 7.5,-110
+2024-08-07,1bbd8de9e8e2fea18fa9360c8ddfa223,-145,+120,,-135,minnesota twins,chicago cubs,-1.5,+130,-150,O 6.5,+115
+2024-08-07,dc260a5e1b0ffb4945ce96617dacb2ee,-125,+105,,-130,houston astros,texas rangers,-1.5,+135,-160,O 8.5,+110
+2024-08-07,78eaa0c152dde805b6ef6e4913e6977d,+175,-210,,-120,chicago white sox,oakland athletics,+1.5,-110,-110,O 8.5,+100
+2024-08-07,0b57668445a807f06ff5f9b78920fbe6,-155,+130,,-110,cincinnati reds,miami marlins,-1.5,+115,-135,O 8.5,-110
+2024-08-07,9c15b9544970f39ba1269af783bbca92,-150,+125,,-125,san diego padres,pittsburgh pirates,-1.5,+120,-140,O 7.5,+105
+2024-08-07,36fe7e5c7213b9378b57addf976d1f6b,-160,+135,,+105,san francisco giants,washington nationals,-1.5,+115,-135,O 8.5,-125
+2024-08-07,52a1f859ea93f865aebdf51b970f7bba,-155,+130,,-110,baltimore orioles,toronto blue jays,-1.5,+105,-125,O 9.5,-110
+2024-08-07,9d75a9f48f76688cb35a59d4b74c28f6,+135,-160,,-110,milwaukee brewers,atlanta braves,+1.5,-160,+135,O 7.5,-110
+2024-08-07,a77ad62f55ed7c54cf3b44aab2182a97,+100,-120,,-110,tampa bay rays,st. louis cardinals,-1.5,+170,-215,O 7.5,-110
+2024-08-07,f311f9c936ac3c285dbe95dd1e5f1b03,+125,-150,,-110,boston red sox,kansas city royals,+1.5,-175,+145,O 8.5,-110
+2024-08-07,1a94ee55072d58d5c098e6cdb79f098a,-160,+135,,-105,new york mets,colorado rockies,-1.5,-105,-115,O 11.5,-115
+2024-08-07,0cc557137984a6c0adbdf9d0a863c025,+115,-135,,+110,detroit tigers,seattle mariners,+1.5,-215,+170,O 6.5,-130
+2024-08-07,b9c1a949106bced424773dca8423df2d,+120,-145,,-125,philadelphia phillies,los angeles dodgers,+1.5,-180,+150,O 8.5,+105

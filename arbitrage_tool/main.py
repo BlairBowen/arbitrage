@@ -22,6 +22,33 @@ def test():
     hash_id = generate_hash_id(sideA, sideB, date)
     print(hash_id)
 
+    from common.helpers import read_yaml
+    from fuzzywuzzy import fuzz
+
+    def find_best_match(sport, input_name):
+        best_match = None
+        highest_similarity = 0
+
+        if sport in read_yaml('sports')['two']:
+            if '.' not in input_name.split(' ')[0]:
+                split_name = input_name.split(' ')
+                input_name = ' '.join([f'{split_name[0][0]}.', split_name[1]])
+            return input_name.lower()
+        else:
+            config = read_yaml('leagues')[sport]
+            # Compare the input name with each name in the list
+            for team in config['teams']:
+                similarity = fuzz.ratio(input_name, team)
+                if similarity > highest_similarity:
+                    highest_similarity = similarity
+                    best_match = team
+
+            return best_match.lower()
+        
+    best_match = find_best_match('boxing', 'J. Jones')
+    print(best_match)
+
+
 def main():
     # Set up the Scrapy project settings
     settings = get_project_settings()
@@ -49,4 +76,4 @@ def main():
     process.start()
 
 if __name__ == "__main__":
-    test()
+    main()
